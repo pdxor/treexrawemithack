@@ -1,0 +1,17 @@
+# Lens Studio local / generated
+Cache/
+PluginsUserPreferences/
+Workspaces/
+Support/
+
+# Scene file stores Inspector values (API keys, local config)
+Assets/Scene.scene
+Assets/Scene.scene.meta
+
+# OS
+.DS_Store
+**/.DS_Store
+
+# Secrets
+.env
+.env.*

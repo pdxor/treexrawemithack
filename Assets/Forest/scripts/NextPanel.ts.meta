@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/e78b6bdf-87d1-49b3-8186-09b2f38fb24c>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 56801e15-a3b0-4627-9788-a0469bf15249
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 56801e15-a3b0-4627-9788-a0469bf15249
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 874c0abb-6a46-48ce-b84a-a1ad03f5ca12
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/874c0abb-6a46-48ce-b84a-a1ad03f5ca12>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: b8045f2d-c26f-432e-af67-fd2829d82d15
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    currentPanel: false
+    nextPanel: false
+    triggerButton: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - currentPanel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      nextPanel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      triggerButton: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject currentPanel {"hint":"The panel that is visible before advancing"}'
+    - '// @input SceneObject nextPanel {"hint":"The panel to show when the button is pressed"}'
+    - '// @input AssignableType triggerButton {"hint":"Optional. Uses an Interactable on this object if not set."}'

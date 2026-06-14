@@ -1,0 +1,65 @@
+- !<AssetImportMetadata/da7ae4f7-04ca-4d3d-8e0c-0b00a6f505ab>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9ec8165f-e406-443b-9c21-087a390da50e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9ec8165f-e406-443b-9c21-087a390da50e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 606f840e-3a9a-4fa8-b6b2-e4474feddb8f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/606f840e-3a9a-4fa8-b6b2-e4474feddb8f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 2c05a3fc-7383-463b-95c8-de0ac0fa7340
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    buttonForImageAndText: false
+    buttonForText: false
+    imagePromptText: false
+    modelIndex: false
+    openAIApiKey: false
+    promptText: false
+    responseText: false
+    systemPrompt: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - buttonForImageAndText: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      buttonForText: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      responseText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      imagePromptText: Describe the contents of this image.
+      promptText: Roast me as a snapchat user.
+      systemPrompt: ""
+      openAIApiKey: YOUR_OPENAI_API_KEY_HERE
+      modelIndex: !<float> 0.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType buttonForImageAndText
+    - // @input AssignableType_1 buttonForText
+    - // @input Component.Text responseText
+    - '// @input string imagePromptText = "Describe the contents of this image."'
+    - '// @input string promptText = "Roast me as a snapchat user."'
+    - '// @input string systemPrompt = "You are a helpful assistant."'
+    - '// @input string openAIApiKey = "YOUR_OPENAI_API_KEY_HERE"'
+    - '// @input float modelIndex {"label":"Model Index (see Output panel for options)"}'
