@@ -1,4 +1,11 @@
-# OpenAIConnector-Spectacles
+
+
+Trees XR — A Snap Spectacles AR learning lens where guide Pepper helps you observe trees, discover wildlife, ask questions, and cultivate a personal forest. Built with Lens Studio, SIK, and OpenAI vision.
+
+Team 10 - AWE - Snap Spectacles Hackathon 
+
+
+# Used as a boilerplate - OpenAIConnector-Spectacles
 
 An open source Lens Studio project that bridges Snap Spectacles and OpenAI. It uses the Spectacles `CameraModule` to capture frames from the device camera and sends them to OpenAI's vision API — displaying the response as AR text overlaid in your field of view.
 
@@ -86,24 +93,6 @@ Set `Model Index` in the Inspector to one of the following. The selected model i
 
 ---
 
-## Standalone Script
-
-Don't need the full project? Download the standalone Lens Studio script package and import it directly into your existing lens:
-
-https://github.com/Oluwatosin-Ogunyebi/OpenAIConnector-Spectacles/blob/main/OpenAIConnector_Standalone.lsc
-
----
-
-## Contributing
-
-Contributions are welcome. The only file you need to edit is `Assets/OpenAIConnector.ts` — everything else is either Lens Studio's auto-generated output or Snap's SpectaclesInteractionKit framework.
-
-If you update `OpenAIConnector.ts`, please also re-export `OpenAIConnector_Standalone.lsc` from Lens Studio so the standalone package stays in sync.
-
-**Good first contributions:**
-- Adding a loading spinner or visual indicator
-- Supporting additional camera IDs (right camera, front-facing)
-- Adding a response history to cycle through previous answers
 
 ---
 
