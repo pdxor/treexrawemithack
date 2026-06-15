@@ -37,7 +37,7 @@
     baseTex:
       typeIdx: 9
       value:
-        id: 85c4531b-b56d-40a3-82e9-f1a80d306af9
+        id: 39cbb6d3-2781-480e-b1fe-dc293bd9171f
         sampler:
           filteringMode: Trilinear
           wrapModeU: ClampToEdge
