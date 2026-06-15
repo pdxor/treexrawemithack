@@ -13,16 +13,16 @@ metaInfo:
     []
   tags:
     []
-  lensName: OpenAIConnector
+  lensName: Treexr
   lensDescriptors:
-    - EXPERIMENTAL_API
+    - GEN_AI_ICON
   lensApplicability:
     - Front
     - Back
   lensClientCompatibilities:
     - Spectacles
   platformBundlesEnabled: false
-  iconHash: ""
+  iconHash: 05addb7b981d04459794748d2f86ab7e
   videoPreviewHash: ""
   fromTemplateName: Spectacles
   fromTemplateUrl: Lens Studio 5.3.0.24111410

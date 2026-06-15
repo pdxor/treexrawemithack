@@ -12,7 +12,7 @@ export class TreeCard extends BaseScriptComponent {
 
   @input
   @allowUndefined
-  @hint("Optional fallback material with a valid shader pass (e.g. Image 2.mat)")
+  @hint("Optional fallback material with a valid shader pass (e.g. treecardimageMaterial.mat)")
   sourceMaterial: Material | undefined
 
   @input

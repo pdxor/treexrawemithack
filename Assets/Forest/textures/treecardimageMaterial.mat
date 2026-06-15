@@ -1,8 +1,8 @@
 - !<Material/2a70e84d-fd70-490e-bf93-77e6c4427761>
   PackagePath: ""
   PassesInfo:
-    - !<own> 7aff9afd-edd2-42a7-9f2b-71284bf20d85
-- !<PassInfo/7aff9afd-edd2-42a7-9f2b-71284bf20d85>
+    - !<own> f3a8c12e-5d47-4b9a-ae71-8306dc1589f4
+- !<PassInfo/f3a8c12e-5d47-4b9a-ae71-8306dc1589f4>
   CachedProperties:
     - Port_Default_N369:
         typeIdx: 5
