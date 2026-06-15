@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/16cd9768-312e-48e5-8d33-3dacb37a4054>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> fa194391-0689-4064-8c78-bbc5acafa23a
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> fa194391-0689-4064-8c78-bbc5acafa23a
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 8aad8e4d-3f9a-4005-8534-2751200ebf49
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/8aad8e4d-3f9a-4005-8534-2751200ebf49>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 7426ea26-5874-48b7-8a0f-8627c2c4eec4
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    cardImage: false
+    cardPanel: false
+    placeholderTexture: false
+    sourceMaterial: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - cardPanel: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      cardImage: !<reference.Image> 00000000-0000-0000-0000-000000000000
+      sourceMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      placeholderTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input SceneObject cardPanel {"hint":"Parent panel object — disabled until a card is ready"}'
+    - '// @input Component.Image cardImage {"hint":"Image component that displays the generated tree card"}'
+    - '// @input Asset.Material sourceMaterial {"hint":"Optional fallback material with a valid shader pass (e.g. Image 2.mat)"}'
+    - '// @input Asset.Texture placeholderTexture {"hint":"Optional placeholder shown while generating"}'

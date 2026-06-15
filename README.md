@@ -18,6 +18,7 @@ Getting camera frames out of Lens Studio and into an external AI API is non-triv
 ## Features
 
 - **Vision requests** — pinch to capture a camera frame and send it with a prompt to OpenAI
+- **Tree card generation** — capture a tree photo, identify the species, and generate a mockup-style info card via OpenAI Images API
 - **Text-only requests** — pinch a second button to send a prompt without an image
 - **16 model options** — select any vision-capable OpenAI model via the Inspector
 - **Loading state** — shows "Thinking..." while awaiting a response; ignores duplicate pinches
@@ -36,6 +37,16 @@ Getting camera frames out of Lens Studio and into an external AI API is non-triv
 5. The response text is written to a `Text` component visible in AR
 
 For text-only requests, steps 2–3 are skipped and the prompt is sent directly.
+
+### Tree card capture flow
+
+When `treeCaptureMode` is enabled (default):
+
+1. User pinches **Capture Tree**
+2. Camera frame is sent to OpenAI vision with a JSON schema prompt
+3. If no tree is detected, a message is shown and the flow stops
+4. If a tree is found, species data is sent to `v1/images/generations` (`gpt-image-1.5` by default)
+5. The returned base64 image is decoded with `Base64.decodeTextureAsync` and displayed on the `TreeCard` panel
 
 ---
 
@@ -63,8 +74,21 @@ For text-only requests, steps 2–3 are skipped and the prompt is sent directly.
 | `buttonForImageAndText` | SIK Interactable for image + text requests |
 | `buttonForText` | SIK Interactable for text-only requests |
 | `responseText` | Text component that displays the response in AR |
+| `treeCaptureMode` | When true, Capture button runs tree detection + card generation |
+| `treeCard` | `TreeCard` script component that displays the generated card |
+| `imageModel` | OpenAI image model (default: `gpt-image-1.5`; try `gpt-image-2` if verified) |
 
 4. Run in the Lens Studio simulator or deploy to your Spectacles device
+
+### Tree card scene setup
+
+If setting up manually in Lens Studio:
+
+1. Under **OpenAI Connector UI**, create **TreeCardPanel** (disabled by default)
+2. Add a child **TreeCardImage** with an `Image` component using `Assets/Forest/textures/treecardimageMaterial.mat`
+3. Assign `Assets/Forest/textures/tree-card.png` as the placeholder texture on the `TreeCard` script
+4. Add the `TreeCard` script to an **always-enabled** object (e.g. the `OpenAIConnector` scene object); wire `cardPanel` → **TreeCardPanel**, `cardImage` → Image
+5. On `OpenAIConnector`, wire `treeCard` → the `TreeCard` component and set `treeCaptureMode` to true
 
 ---
 

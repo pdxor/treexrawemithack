@@ -1,5 +1,13 @@
 import { Interactable } from 'SpectaclesInteractionKit/Components/Interaction/Interactable/Interactable'
 import { validate } from './SpectaclesInteractionKit/Utils/validate'
+import { TreeCard } from './Forest/scripts/TreeCard'
+import {
+  TreeCardData,
+  TREE_VISION_SYSTEM_PROMPT,
+  buildTreeCardImagePrompt,
+  parseTreeCardResponse,
+} from './Forest/scripts/treeCardData'
+
 let cameraModule = require('LensStudio:CameraModule')
 let internetModule = require('LensStudio:InternetModule')
 
@@ -17,6 +25,10 @@ export class OpenAIConnector extends BaseScriptComponent {
   @input openAIApiKey: string = 'YOUR_OPENAI_API_KEY_HERE'
   @input @label('Model Index (see Output panel for options)')
   modelIndex: number = 0
+
+  @input @allowUndefined treeCard: TreeCard | undefined
+  @input treeCaptureMode: boolean = true
+  @input imageModel: string = 'gpt-image-1.5'
 
   private readonly modelNames: string[] = [
     'gpt-5.4',       // 0  - Most capable
@@ -59,16 +71,20 @@ export class OpenAIConnector extends BaseScriptComponent {
         this.cameraTexture,
         (successFrame) => {
           print('Success: Image captured successfully')
-          const messages = [
-            {
-              role: 'user',
-              content: [
-                { type: 'text', text: this.imagePromptText },
-                { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${successFrame}` } },
-              ],
-            },
-          ]
-          this.callOpenAI(messages)
+          if (this.treeCaptureMode) {
+            this.analyzeTreeCapture(successFrame)
+          } else {
+            const messages = [
+              {
+                role: 'user',
+                content: [
+                  { type: 'text', text: this.imagePromptText },
+                  { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${successFrame}` } },
+                ],
+              },
+            ]
+            this.callOpenAI(messages)
+          }
         },
         () => {
           print('Error encoding camera texture.')
@@ -79,6 +95,137 @@ export class OpenAIConnector extends BaseScriptComponent {
       )
 
       onNewFrame.remove(registration)
+    })
+  }
+
+  private async analyzeTreeCapture(imageB64: string): Promise<void> {
+    if (this.isLoading) return
+    this.isLoading = true
+    this.treeCard?.hide()
+    this.responseText.text = 'Looking for a tree...'
+
+    try {
+      const url = 'https://api.openai.com/v1/chat/completions'
+      const request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          model: this.modelNames[this.modelIndex] ?? 'gpt-5.4',
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: TREE_VISION_SYSTEM_PROMPT },
+            {
+              role: 'user',
+              content: [
+                { type: 'text', text: 'Analyze this photo for a tree.' },
+                { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${imageB64}` } },
+              ],
+            },
+          ],
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openAIApiKey}`,
+        },
+      })
+
+      const response = await internetModule.fetch(request)
+      if (response.status !== 200) {
+        const errorText = await response.text()
+        print('Tree vision request failed: ' + errorText)
+        this.setError('Error ' + response.status + ': ' + errorText)
+        return
+      }
+
+      const responseJson = await response.json()
+      const content = responseJson.choices[0].message.content
+      print('Tree vision response: ' + content)
+
+      const treeData = parseTreeCardResponse(content)
+      if (!treeData) {
+        this.setError('Could not read tree data. Try again.')
+        return
+      }
+
+      if (!treeData.hasTree) {
+        this.isLoading = false
+        this.responseText.text = 'No tree found. Point at a tree and try again.'
+        return
+      }
+
+      this.responseText.text = 'Creating your tree card...'
+      try {
+        this.treeCard?.showPlaceholder()
+      } catch (placeholderError) {
+        print('TreeCard placeholder warning: ' + placeholderError)
+      }
+      await this.generateTreeCard(treeData)
+    } catch (error) {
+      print('Error analyzing tree capture: ' + error)
+      this.setError('Error: ' + error)
+    }
+  }
+
+  private async generateTreeCard(data: TreeCardData): Promise<void> {
+    try {
+      const url = 'https://api.openai.com/v1/images/generations'
+      const request = new Request(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          model: this.imageModel,
+          prompt: buildTreeCardImagePrompt(data),
+          size: '1024x1536',
+          quality: 'high',
+          output_format: 'jpeg',
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.openAIApiKey}`,
+        },
+      })
+
+      const response = await internetModule.fetch(request)
+      if (response.status !== 200) {
+        const errorText = await response.text()
+        print('Tree card image request failed: ' + errorText)
+        this.treeCard?.hide()
+        this.setError('Error ' + response.status + ': ' + errorText)
+        return
+      }
+
+      const responseJson = await response.json()
+      const b64Json = responseJson.data?.[0]?.b64_json
+      if (!b64Json) {
+        this.treeCard?.hide()
+        this.setError('No image returned from OpenAI.')
+        return
+      }
+
+      await this.displayGeneratedCard(b64Json)
+      this.responseText.text = `You found a ${data.commonName}!`
+      this.isLoading = false
+    } catch (error) {
+      print('Error generating tree card: ' + error)
+      this.treeCard?.hide()
+      this.setError('Error: ' + error)
+    }
+  }
+
+  private displayGeneratedCard(b64Json: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      Base64.decodeTextureAsync(
+        b64Json,
+        (texture) => {
+          if (this.treeCard) {
+            this.treeCard.showGenerated(texture)
+          } else {
+            print('WARNING: treeCard not assigned — cannot display generated card.')
+          }
+          resolve()
+        },
+        () => {
+          reject(new Error('Failed to decode generated tree card image.'))
+        }
+      )
     })
   }
 
@@ -156,6 +303,8 @@ export class OpenAIConnector extends BaseScriptComponent {
     print('Available models:')
     this.modelNames.forEach((name, i) => print('  ' + i + ': ' + name))
     print('Selected model: ' + (this.modelNames[this.modelIndex] ?? 'gpt-5.4 (fallback)'))
+    print('Tree capture mode: ' + this.treeCaptureMode)
+    print('Image model: ' + this.imageModel)
 
     validate(this.buttonForImageAndText)
     this.buttonForImageAndText.onTriggerEnd.add(this.createCameraRequest)

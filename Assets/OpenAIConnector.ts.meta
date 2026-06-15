@@ -28,12 +28,15 @@
   ScriptInputsHidden:
     buttonForImageAndText: false
     buttonForText: false
+    imageModel: false
     imagePromptText: false
     modelIndex: false
     openAIApiKey: false
     promptText: false
     responseText: false
     systemPrompt: false
+    treeCaptureMode: false
+    treeCard: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -51,6 +54,9 @@
       systemPrompt: ""
       openAIApiKey: YOUR_OPENAI_API_KEY_HERE
       modelIndex: !<float> 0.000000
+      treeCard: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      treeCaptureMode: true
+      imageModel: gpt-image-1.5
   ScriptTypes:
     -
       {}
@@ -63,3 +69,6 @@
     - '// @input string systemPrompt = "You are a helpful assistant."'
     - '// @input string openAIApiKey = "YOUR_OPENAI_API_KEY_HERE"'
     - '// @input float modelIndex {"label":"Model Index (see Output panel for options)"}'
+    - // @input AssignableType_2 treeCard
+    - // @input bool treeCaptureMode = true
+    - '// @input string imageModel = "gpt-image-1.5"'
