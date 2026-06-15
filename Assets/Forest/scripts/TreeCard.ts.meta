@@ -49,5 +49,5 @@
   InputLines:
     - '// @input SceneObject cardPanel {"hint":"Parent panel object — disabled until a card is ready"}'
     - '// @input Component.Image cardImage {"hint":"Image component that displays the generated tree card"}'
-    - '// @input Asset.Material sourceMaterial {"hint":"Optional fallback material with a valid shader pass (e.g. Image 2.mat)"}'
+    - '// @input Asset.Material sourceMaterial {"hint":"Optional fallback material with a valid shader pass (e.g. treecardimageMaterial.mat)"}'
     - '// @input Asset.Texture placeholderTexture {"hint":"Optional placeholder shown while generating"}'

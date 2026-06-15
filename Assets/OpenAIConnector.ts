@@ -184,6 +184,7 @@ export class OpenAIConnector extends BaseScriptComponent {
       })
 
       const response = await internetModule.fetch(request)
+      print('Tree card image response status: ' + response.status)
       if (response.status !== 200) {
         const errorText = await response.text()
         print('Tree card image request failed: ' + errorText)
@@ -298,6 +299,15 @@ export class OpenAIConnector extends BaseScriptComponent {
   onAwake(): void {
     if (this.openAIApiKey === 'YOUR_OPENAI_API_KEY_HERE') {
       print('WARNING: OpenAI API key is not set. Update openAIApiKey in the Inspector.')
+    }
+
+    if (!this.treeCard) {
+      this.treeCard = this.getSceneObject().getComponent(TreeCard.getTypeName()) as TreeCard
+      if (this.treeCard) {
+        print('TreeCard auto-assigned from OpenAIConnector object.')
+      } else {
+        print('WARNING: treeCard is not assigned. Wire the TreeCard component in the Inspector.')
+      }
     }
 
     print('Available models:')
